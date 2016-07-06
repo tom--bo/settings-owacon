@@ -67,8 +67,6 @@ if v:version >= 703
 endif
 
 if v:version >= 704
-  "" Snippets
-  NeoBundle 'SirVer/ultisnips'
   NeoBundle 'FelikZ/ctrlp-py-matcher'
 endif
 
@@ -77,8 +75,6 @@ NeoBundle 'honza/vim-snippets'
 "" Color
 NeoBundle 'tomasr/molokai'
 
-"" Vim-Bootstrap Updater by sherzberg
-NeoBundle 'avelino/vim-bootstrap-updater'
 
 "" Custom bundles
 NeoBundle 'vim-scripts/c.vim'
@@ -381,12 +377,6 @@ noremap <leader>b :CtrlPBuffer<CR>
 let g:ctrlp_map = '<leader>e'
 let g:ctrlp_open_new_file = 'r'
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-
-" snippets
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit="vertical"
 
 " syntastic
 let g:syntastic_always_populate_loc_list=1
