@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# percona toolkit
+
+apt-get install libio-socket-ssl-perl libnet-ssleay-perl libterm-readkey-perl
+
+wget percona.com/get/percona-toolkit.deb
+
+dpkg -i percona-toolkit.deb
+
