@@ -7,6 +7,4 @@ apt-get install -y tmux
 apt-get install -y zsh
 
 
-# apt-get install -y
-
 
