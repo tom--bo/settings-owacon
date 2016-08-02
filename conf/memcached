@@ -1,0 +1,17 @@
+ 
+
+# port 
+-p 11211
+
+# user
+-u memcached
+
+# max connection
+-c 1024
+
+# memory (MB)
+-m 64
+
+# using unix socket
+-s /tmp/memcached.sock
+
