@@ -1,7 +1,7 @@
- 
-
 # port 
--p 11211
+# -p 11211
+## with UNIX socket
+-p 0
 
 # user
 -u memcached
