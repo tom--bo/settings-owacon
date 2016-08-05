@@ -8,7 +8,7 @@ dest=access_`date +%Y%m%d_%H-%M-%S`.log
 #rotate log
 cp $"$log_dir$log_name" $dest
 sudo cp $"$log_dir$log_name" "$log_dir$dest"
-sudo ehco "" > "$log_dir$log_name"
+sudo rm $"$log_dir$log_name"
 
 #restart nginx
 if type systemctl >/dev/null 2>&1; then
