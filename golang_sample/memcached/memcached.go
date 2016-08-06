@@ -9,7 +9,9 @@ import (
 )
 
 func main() {
-	mc := memcache.New("localhost:11211")
+    // without UNIX socket
+	// mc := memcache.New("localhost:11211")
+	mc := memcache.New("/tmp/memcached.sock")
 
 	// 下でも良い
 	//mc.Set(&memcache.Item{Key: "foo", Value: []byte("my value")})
@@ -38,7 +40,7 @@ func main() {
 	// 複数同時取得
 	ret, err2 := mc.GetMulti([]string{"foo", "hoge"})
 	if err2 != nil {
-		fmt.Println(err)
+        fmt.Println(err)
 		return
 	}
 
