@@ -17,4 +17,13 @@ echo "$NEXTVER,`date +%H:%M:%S`" >> $VERSION_FILE
 # lotate script here
 #
 
+# MySQL
+MYSQL_LOG_DIR="/var/log/mysql"
+sudo systemctl stop mysql
+
+sudo mv $MYSQL_LOG_DIR/mysql-slow.log $MYSQL_LOG_DIR/mysql_$LAST.log
+sudo pt-query-digest $MYSQL_LOG_DIR/mysql_$LAST.log $MYSQL_LOG_DIR/digest_$Last.log
+
+sudo systemctl start mysql
+
 
