@@ -6,7 +6,7 @@ log_name=access.log
 dest=access_`date +%Y%m%d_%H-%M-%S`.log 
 
 #rotate log
-cp $"$log_dir$log_name" $dest
+sudo cp $"$log_dir$log_name" $dest
 sudo cp $"$log_dir$log_name" "$log_dir$dest"
 sudo rm $"$log_dir$log_name"
 
