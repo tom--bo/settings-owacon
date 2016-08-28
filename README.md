@@ -9,4 +9,12 @@
   - ルール関連のページ
   - 各ディレクトリのREADME.md
 
+## チェックリスト
+
+- init系スクリプト(init.shとか)
+  - mysqlのdroptable.
+    - index消える
+  - 再起動タイミング
+    - goからのunix domain socketが死ぬ
+
 
