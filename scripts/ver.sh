@@ -13,6 +13,12 @@ set -- $LAST
 NEXTVER=`expr $1 + 1`
 echo "$NEXTVER,`date +%H:%M:%S`" >> $VERSION_FILE
 
+LOG_DIR="logs"
+NOW_LOG_DIR="$LOG_DIR,_$LAST"
+if [ ! -e $NOW_LOG_DIR ]; then
+    mkdir $NOW_LOG_DIR
+fi
+
 #
 # lotate script here
 #
@@ -21,9 +27,8 @@ echo "$NEXTVER,`date +%H:%M:%S`" >> $VERSION_FILE
 MYSQL_LOG_DIR="/var/log/mysql"
 sudo systemctl stop mysql
 
-sudo mv $MYSQL_LOG_DIR/mysql-slow.log $MYSQL_LOG_DIR/mysql_$LAST.log
-sudo pt-query-digest $MYSQL_LOG_DIR/mysql_$LAST.log $MYSQL_LOG_DIR/digest_$Last.log
+sudo mv $MYSQL_LOG_DIR/mysql-slow.log $NOW_LOG_DIR/mysql.log
+sudo pt-query-digest $NOW_LOG_DIR/mysql.log $NOW_LOG_DIR/digest.log
 
 sudo systemctl start mysql
-
 
