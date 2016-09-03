@@ -32,3 +32,18 @@ sudo pt-query-digest $NOW_LOG_DIR/mysql.log $NOW_LOG_DIR/digest.log
 
 sudo systemctl start mysql
 
+#Nginx
+NGINX_LOG_DIR="/var/log/nginx"
+sudo mv $NGINX_LOG_DIR/access.log $NOW_LOG_DIR/access.log
+
+if type systemctl >/dev/null 2>&1; then
+  sudo systemctl restart nginx
+else
+  sudo service nginx restart
+fi
+
+#pprof
+#実行していてファイルだけを取得
+PPROF_LOG_DIR="/home/isucon/pprof"
+sudo mv $PPROF_LOG_DIR/*.pb.gz $NOW_LOG_DIR/pprof.pb.gz
+
