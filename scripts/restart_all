@@ -1,0 +1,33 @@
+#!/bin/sh
+
+getopts "d" delete
+
+MYSQL_LOG_DIR="/var/log/mysql"
+sudo systemctl stop mysql
+if [ $delete = "d" ]; then
+	sudo rm $MYSQL_LOG_DIR/mysql-slow.log
+fi
+sudo systemctl start mysql
+
+#Nginx
+NGINX_LOG_DIR="/var/log/nginx"
+if [ $delete = "d" ]; then
+	sudo rm $NGINX_LOG_DIR/access.log
+fi
+
+if type systemctl >/dev/null 2>&1; then
+  sudo systemctl restart nginx
+else
+  sudo service nginx restart
+fi
+
+#pprof
+PPROF_LOG_DIR="/home/isucon/pprof"
+if type systemctl >/dev/null 2>&1; then
+	sudo rm $PPROF_LOG_DIR/*.pb.gz
+fi
+
+sudo supervisorctl restart isucon_go
+
+# sudo systemctl restart redis
+
