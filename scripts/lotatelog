@@ -10,11 +10,11 @@ fi
 LAST=`tail -n 1 $VERSION_FILE`
 IFS=','
 set -- $LAST
-NEXTVER=`expr $1 + 1`
-echo "$NEXTVER,`date +%H:%M:%S`" >> $VERSION_FILE
+NEWVER=`expr $1 + 1`
+echo "$NEWVER,`date +%H:%M:%S`" >> $VERSION_FILE
 
 LOG_DIR="logs"
-NOW_LOG_DIR="$LOG_DIR,_$LAST"
+NOW_LOG_DIR="$LOG_DIR,_$NEWVER"
 if [ ! -e $NOW_LOG_DIR ]; then
     mkdir $NOW_LOG_DIR
 fi
