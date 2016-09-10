@@ -3,11 +3,21 @@
 getopts "d" delete
 
 MYSQL_LOG_DIR="/var/log/mysql"
-sudo systemctl stop mysql
+if type systemctl >/dev/null 2>&1; then
+	sudo systemctl stop mysql
+else
+	sudo service stop mysql
+fi
+
 if [ $delete = "d" ]; then
 	sudo rm $MYSQL_LOG_DIR/mysql-slow.log
 fi
-sudo systemctl start mysql
+
+if type systemctl >/dev/null 2>&1; then
+	sudo systemctl start mysql
+else
+	sudo service start mysql
+fi
 
 #Nginx
 NGINX_LOG_DIR="/var/log/nginx"
