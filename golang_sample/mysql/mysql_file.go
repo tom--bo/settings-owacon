@@ -5,14 +5,47 @@ import (
 	"database/sql"
 	// "encoding/binary"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"os"
 	"strconv"
 	"strings"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
+	db, err := sql.Open("mysql", "root:root@unix(/var/lib/mysql/mysql.sock)/isucon")
+	if err != nil {
+		panic(err.Error())
+
+	}
+	defer db.Close()
+
+	rows, err := db.Query("SELECT id,content FROM memos")
+	defer rows.Close()
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for rows.Next() {
+		var id int64
+		var content string
+
+		if err := rows.Scan(&id, &content); err != nil {
+			panic(err.Error())
+		}
+		title := strings.SplitN(content, "\n", 2)[0]
+
+		_, err := db.Exec(
+			"UPDATE memos SET title = ? WHERE id = ?",
+			title, id,
+		)
+		if err != nil {
+			panic(err.Error())
+		}
+	}
+
+}
+
+func main2() {
 	db, err := sql.Open("mysql", "root@/isuconp")
 	if err != nil {
 		panic(err.Error())
