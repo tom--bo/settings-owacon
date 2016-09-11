@@ -13,8 +13,8 @@ set -- $LAST
 NEWVER=`expr $1 + 1`
 echo "$NEWVER,`date +%H:%M:%S`" >> $VERSION_FILE
 
-LOG_DIR="logs"
-NOW_LOG_DIR="$LOG_DIR,_$NEWVER"
+LOG_DIR="/var/logs"
+NOW_LOG_DIR="$LOG_DIR/$NEWVER"
 if [ ! -e $NOW_LOG_DIR ]; then
     mkdir $NOW_LOG_DIR
 fi
@@ -25,12 +25,12 @@ fi
 
 # MySQL
 MYSQL_LOG_DIR="/var/log/mysql"
-sudo systemctl stop mysql
+sudo service mysqld stop
 
 sudo mv $MYSQL_LOG_DIR/mysql-slow.log $NOW_LOG_DIR/mysql.log
-sudo pt-query-digest $NOW_LOG_DIR/mysql.log $NOW_LOG_DIR/digest.log
+sudo pt-query-digest $NOW_LOG_DIR/mysql.log > $NOW_LOG_DIR/digest.log
 
-sudo systemctl start mysql
+sudo service mysqld start
 
 #Nginx
 NGINX_LOG_DIR="/var/log/nginx"
