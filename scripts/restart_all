@@ -6,7 +6,7 @@ MYSQL_LOG_DIR="/var/log/mysql"
 if type systemctl >/dev/null 2>&1; then
 	sudo systemctl stop mysql
 else
-	sudo service mysqld stop 
+	sudo service mysqld stop
 fi
 
 if [ $delete = "d" ]; then

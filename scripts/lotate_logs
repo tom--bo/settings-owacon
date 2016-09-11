@@ -11,12 +11,17 @@ LAST=`tail -n 1 $VERSION_FILE`
 IFS=','
 set -- $LAST
 NEWVER=`expr $1 + 1`
+echo $NEWVER
 echo "$NEWVER,`date +%H:%M:%S`" >> $VERSION_FILE
 
 LOG_DIR="/var/logs"
 NOW_LOG_DIR="$LOG_DIR/$NEWVER"
+
 if [ ! -e $NOW_LOG_DIR ]; then
     mkdir $NOW_LOG_DIR
+fi
+if [ ! -e $LOG_DIR ]; then
+    mkdir $LOG_DIR
 fi
 
 #
@@ -25,6 +30,10 @@ fi
 
 # MySQL
 MYSQL_LOG_DIR="/var/log/mysql"
+if [ ! -e $MYSQL_LOG_DIR ]; then
+    mkdir $MYSQL_LOG_DIR
+fi
+
 sudo service mysqld stop
 
 sudo mv $MYSQL_LOG_DIR/mysql-slow.log $NOW_LOG_DIR/mysql.log
@@ -45,5 +54,8 @@ fi
 #pprof
 #実行していてファイルだけを取得
 PPROF_LOG_DIR="/home/isucon/pprof"
+
 sudo mv $PPROF_LOG_DIR/*.pb.gz $NOW_LOG_DIR/pprof.pb.gz
+
+
 
