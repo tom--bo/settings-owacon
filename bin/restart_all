@@ -33,11 +33,11 @@ fi
 
 #pprof
 PPROF_LOG_DIR="/home/isucon/pprof"
-if type systemctl >/dev/null 2>&1; then
+if [ $delete = "d" ]; then
 	sudo rm $PPROF_LOG_DIR/*.pb.gz
 fi
 
-sudo supervisorctl restart isucon_go
+# sudo supervisorctl restart isucon_go
 
 # sudo systemctl restart redis
 
