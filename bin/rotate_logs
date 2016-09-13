@@ -1,5 +1,10 @@
 #!/bin/sh
-VERSION_FILE="version.txt"
+LOG_DIR="/var/logs"
+VERSION_FILE="$LOG_DIR/version.txt"
+
+if [ ! -e $LOG_DIR ]; then
+    sudo mkdir -m 777 $LOG_DIR
+fi
 
 if [ ! -e $VERSION_FILE ]; then
     touch $VERSION_FILE
@@ -10,20 +15,15 @@ fi
 LAST=`tail -n 1 $VERSION_FILE`
 IFS=','
 set -- $LAST
-NEWVER=`expr $1 + 1`
-echo $NEWVER
-echo "$NEWVER,`date +%H:%M:%S`" >> $VERSION_FILE
+NEW_VER=`expr $1 + 1`
+echo "This is ver: $NEW_VER."
+echo "$NEW_VER,`date +%H:%M:%S`" >> $VERSION_FILE
 
-LOG_DIR="/var/logs"
-NOW_LOG_DIR="$LOG_DIR/$NEWVER"
+NOW_LOG_DIR="$LOG_DIR/$NEW_VER"
 
 if [ ! -e $NOW_LOG_DIR ]; then
-    mkdir $NOW_LOG_DIR
+    sudo mkdir -m 777 $NOW_LOG_DIR
 fi
-if [ ! -e $LOG_DIR ]; then
-    mkdir $LOG_DIR
-fi
-
 #
 # lotate script here
 #
@@ -31,15 +31,23 @@ fi
 # MySQL
 MYSQL_LOG_DIR="/var/log/mysql"
 if [ ! -e $MYSQL_LOG_DIR ]; then
-    mkdir $MYSQL_LOG_DIR
+    mkdir -m 777 $MYSQL_LOG_DIR
 fi
 
-sudo service mysqld stop
+if type systemctl >/dev/null 2>&1; then
+  sudo systemctl stop mysql
+else
+  sudo service mysqld stop
+fi
 
 sudo mv $MYSQL_LOG_DIR/mysql-slow.log $NOW_LOG_DIR/mysql.log
 sudo pt-query-digest $NOW_LOG_DIR/mysql.log > $NOW_LOG_DIR/digest.log
 
-sudo service mysqld start
+if type systemctl >/dev/null 2>&1; then
+  sudo systemctl start mysql
+else
+  sudo service mysqld start
+fi
 
 #Nginx
 NGINX_LOG_DIR="/var/log/nginx"
