@@ -41,7 +41,7 @@ else
 fi
 
 sudo mv $MYSQL_LOG_DIR/mysql-slow.log $NOW_LOG_DIR/mysql.log
-sudo pt-query-digest $NOW_LOG_DIR/mysql.log > $NOW_LOG_DIR/digest.log
+# sudo pt-query-digest $NOW_LOG_DIR/mysql.log > $NOW_LOG_DIR/digest.log
 
 if type systemctl >/dev/null 2>&1; then
   sudo systemctl start mysql
