@@ -1,4 +1,4 @@
-export GOPATH=/home/isucon/go
+export GOPATH=/home/isucon/mygo
 export GOROOT=/usr/local/go
 export PATH=${PATH}:${GOROOT}/bin
 
