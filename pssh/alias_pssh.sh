@@ -1,0 +1,1 @@
+alias pssh="parallel-ssh"
